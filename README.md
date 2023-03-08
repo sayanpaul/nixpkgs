@@ -1,13 +1,12 @@
 1. Install and setup Nix
     ```console
-    $ curl -L https://nixos.org/nix/install | sh
+    $ sh <(curl -L https://nixos.org/nix/install)
     $ nix-shell -p nix-info --run "nix-info -m"
     $ mkdir -p ~/.config/nix
     $ echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
     ```
 1. Clone this repo to `~/.config`
     ```console
-    $ mkdir -p ~/.config/
     $ cd ~/.config
     $ git clone git@github.com:sayanpaul/nixpkgs.git
     ```
