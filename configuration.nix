@@ -66,6 +66,8 @@
     '';
   };
 
+  security.pam.enableSudoTouchIdAuth = true;
+
   system.defaults = {
     CustomUserPreferences = {
       "com.google.Chrome"."ApplePressAndHoldEnabled" = false;

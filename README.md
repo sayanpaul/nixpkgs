@@ -1,6 +1,6 @@
 1. Install and setup Nix
     ```console
-    $ sh <(curl -L https://nixos.org/nix/install)
+    $ curl -L https://nixos.org/nix/install | sh
     $ nix-shell -p nix-info --run "nix-info -m"
     $ mkdir -p ~/.config/nix
     $ echo "experimental-features = nix-command flakes" > ~/.config/nix/nix.conf
