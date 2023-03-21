@@ -222,77 +222,77 @@
     mouse = true;
     terminal = "xterm-256color";
     extraConfig = ''
-    set-option -sa terminal-overrides ',xterm-256color:Tc'
+      set-option -sa terminal-overrides ',xterm-256color:Tc'
 
-    ## Status bar
+      ## Status bar
 
-    # The following code is adapted from:
-    # https://coderwall.com/p/trgyrq/make-your-tmux-status-bar-responsive
-    # It provides the same appearance as https://github.com/powerline/powerline,
-    # but sidesteps the environment/configuration hell which that project
-    # introduces.
+      # The following code is adapted from:
+      # https://coderwall.com/p/trgyrq/make-your-tmux-status-bar-responsive
+      # It provides the same appearance as https://github.com/powerline/powerline,
+      # but sidesteps the environment/configuration hell which that project
+      # introduces.
 
-    # Format to display on the left-hand side of the status bar.
-    # Note that the conditional #{?cond,true,false} operator does not do any
-    # fancy parsing, so you can't have literal commas in the conditions --
-    # this will cause the conditions to be split up. So we have to use multiple
-    # style #[attr=value] directives.
-    set-option -g status-left '\
-    #{?client_prefix,\
-    #[fg=colour254]#[bg=colour31],\
-    #[fg=colour16]#[bg=colour254]#[bold]}\
-     #{=80:session_name}\
-     #{?client_prefix,\
-    #[fg=colour31],\
-    #[fg=colour254]}\
-    #[bg=colour234,nobold] '
+      # Format to display on the left-hand side of the status bar.
+      # Note that the conditional #{?cond,true,false} operator does not do any
+      # fancy parsing, so you can't have literal commas in the conditions --
+      # this will cause the conditions to be split up. So we have to use multiple
+      # style #[attr=value] directives.
+      set-option -g status-left '\
+      #{?client_prefix,\
+      #[fg=colour254]#[bg=colour31],\
+      #[fg=colour16]#[bg=colour254]#[bold]}\
+       #{=80:session_name}\
+       #{?client_prefix,\
+      #[fg=colour31],\
+      #[fg=colour254]}\
+      #[bg=colour234,nobold] '
 
-    # Maximum length of the format displayed on the left-hand side.
-    # Since the maximum length of the session name is limited in the above
-    # format string, this number is unimportant -- it just needs to be a
-    # bit larger than what is allocated for the session name, to allow for
-    # the surrounding characters.
-    set-option -g status-left-length 90
+      # Maximum length of the format displayed on the left-hand side.
+      # Since the maximum length of the session name is limited in the above
+      # format string, this number is unimportant -- it just needs to be a
+      # bit larger than what is allocated for the session name, to allow for
+      # the surrounding characters.
+      set-option -g status-left-length 90
 
-    # Format to display on the right-hand side of the status bar.
-    set-option -g status-right \'\'
+      # Format to display on the right-hand side of the status bar.
+      set-option -g status-right \'\'
 
-    # Format to display for the current window.
-    #set-option -g window-status-current-format "\
-    #[fg=colour117,bg=colour31] #{window_index}#{window_flags} \
-    #[fg=colour231,bold]#{window_name} #[fg=colour31,bg=colour234,nobold] "
-    set-option -g window-status-current-format "\
-    #[fg=colour147,bg=colour135] #{window_index}#{window_flags} \
-    #[fg=colour231,bold]#{window_name} #[fg=colour31,bg=colour234,nobold] "
+      # Format to display for the current window.
+      #set-option -g window-status-current-format "\
+      #[fg=colour117,bg=colour31] #{window_index}#{window_flags} \
+      #[fg=colour231,bold]#{window_name} #[fg=colour31,bg=colour234,nobold] "
+      set-option -g window-status-current-format "\
+      #[fg=colour147,bg=colour135] #{window_index}#{window_flags} \
+      #[fg=colour231,bold]#{window_name} #[fg=colour31,bg=colour234,nobold] "
 
-    # Format to display for other windows.
-    set-option -g window-status-format "\
-    #[fg=colour244,bg=colour234]#{window_index}#{window_flags} \
-    #[fg=colour249]#{window_name} "
+      # Format to display for other windows.
+      set-option -g window-status-format "\
+      #[fg=colour244,bg=colour234]#{window_index}#{window_flags} \
+      #[fg=colour249]#{window_name} "
 
-    # Background color for parts of the status bar not specified by the above
-    # formats. For instance, the empty space to the right, and the single
-    # spaces between instances of window-status-format.
-    set-option -g status-bg colour234
+      # Background color for parts of the status bar not specified by the above
+      # formats. For instance, the empty space to the right, and the single
+      # spaces between instances of window-status-format.
+      set-option -g status-bg colour234
 
-    # Inhibit the default styling for windows with unseen activity, which
-    # looks blatantly incorrect with the "powerline" theme we are trying to
-    # emulate.
-    set-window-option -g window-status-activity-style none
-    set-window-option -g window-status-activity-style none
+      # Inhibit the default styling for windows with unseen activity, which
+      # looks blatantly incorrect with the "powerline" theme we are trying to
+      # emulate.
+      set-window-option -g window-status-activity-style none
+      set-window-option -g window-status-activity-style none
 
-    # Update the status bar every second, instead of the default 15(!)
-    # seconds. It doesn't look like it's possible to update more than
-    # once per second, unfortunately.
-    set-option -g status-interval 1
+      # Update the status bar every second, instead of the default 15(!)
+      # seconds. It doesn't look like it's possible to update more than
+      # once per second, unfortunately.
+      set-option -g status-interval 1
 
-    bind -n C-S-Left previous-window
-    bind -n C-S-Right next-window
+      bind -n C-S-Left previous-window
+      bind -n C-S-Right next-window
 
-    # Open new windows and splits in the same directory as the current pane.
-    bind '"' split-window -c "#{pane_current_path}"
-    bind % split-window -h -c "#{pane_current_path}"
-    bind-key c new-window -c "#{pane_current_path}"
+      # Open new windows and splits in the same directory as the current pane.
+      bind '"' split-window -c "#{pane_current_path}"
+      bind % split-window -h -c "#{pane_current_path}"
+      bind-key c new-window -c "#{pane_current_path}"
     '';
   };
 }
