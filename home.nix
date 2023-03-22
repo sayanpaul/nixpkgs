@@ -23,6 +23,7 @@
     jdk
     jq
     neovim
+    nodejs
     parallel
     pv # Pipe Viewer
     (python310.withPackages (p: with p; [pandas ipython black mypy pyright]))
