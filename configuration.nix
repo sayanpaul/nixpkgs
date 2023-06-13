@@ -96,8 +96,6 @@
       FXPreferredViewStyle = "Nlsv";
       AppleShowAllExtensions = true;
     };
-
-    screencapture.type = "jpg";
   };
 
   system.stateVersion = 4;
