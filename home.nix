@@ -4,7 +4,7 @@
   lib,
   ...
 }: {
-  home.stateVersion = "22.11";
+  home.stateVersion = "23.05";
 
   home.packages = with pkgs; [
     bat
@@ -26,7 +26,7 @@
     nodejs
     parallel
     pv # Pipe Viewer
-    (python310.withPackages (p: with p; [pandas ipython black mypy pyright]))
+    (python311.withPackages (p: with p; [pandas ipython black mypy pyright]))
     ripgrep
     shellcheck
     shfmt

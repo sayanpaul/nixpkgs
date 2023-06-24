@@ -7,6 +7,8 @@
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
 
+  users.users.sayanpaul.home = /Users/sayanpaul;
+
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
     recursive
