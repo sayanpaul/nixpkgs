@@ -7,6 +7,9 @@
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
 
+  # Hack to build on 24.05, some options-db dependency had an invalid XML
+  documentation.enable = false;
+
   users.users.sayanpaul.home = /Users/sayanpaul;
 
   fonts.fontDir.enable = true;
@@ -34,13 +37,6 @@
       EDITOR = "nvim";
       MANPAGER = "sh -c 'col -bx | bat -l man -p'";
     };
-  };
-
-  homebrew = {
-    enable = true;
-    casks = [
-      "alacritty"
-    ];
   };
 
   programs.fish = {

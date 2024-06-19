@@ -13,7 +13,7 @@
     delta # Alternative git diff pager
     du-dust
     envchain
-    exa # Alternative `ls`
+    eza # Alternative `ls`
     fd # Alternative `find`
     fzf
     gawk
@@ -25,6 +25,7 @@
     neovim
     nodejs
     parallel
+    pandoc
     pv # Pipe Viewer
     (python311.withPackages (p: with p; [pandas ipython black mypy pyright]))
     ripgrep
@@ -85,7 +86,6 @@
         history = 1000;
         multiplier = 3;
       };
-      tabspaces = 4;
       font = {
         normal = {
           family = "JetBrainsMono Nerd Font Mono";
@@ -175,13 +175,15 @@
           white = "0xe6e6d1";
         };
       };
-      key_bindings = [
-        {
-          key = "T";
-          mods = "Command";
-          chars = "\\u0002c";
-        }
-      ];
+      keyboard = {
+        bindings = [
+          {
+            key = "T";
+            mods = "Command";
+            chars = "\\u0002c";
+          }
+        ];
+      };
       shell = {
         program = "${pkgs.fish}/bin/fish";
         args = [
@@ -215,7 +217,11 @@
       gp = "git push origin \(git branch --show-current\)";
       gpf = "git push --force-with-lease origin \(git branch --show-current\)";
     };
-    interactiveShellInit = "starship init fish | source";
+    interactiveShellInit = ''
+      starship init fish | source
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+      direnv hook fish | source
+    '';
   };
 
   programs.tmux = {
