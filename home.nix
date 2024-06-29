@@ -63,7 +63,7 @@
       };
       diff.colorMoved = "dimmed-zebra";
       delta = {
-        syntax-theme = "OneHalfDark";
+        syntax-theme = "GitHub";
         navigate = "true";
         line-numbers = "true";
       };
@@ -109,72 +109,108 @@
           y = 0;
         };
       };
+      #--- Light Mode
       colors = {
         primary = {
-          background = "0x1c1c1c";
-          foreground = "0xf8f8f2";
+          foreground = "0x4a484d";
+          background = "0xffffff";
         };
         cursor = {
-          text = "CellBackground";
-          cursor = "CellForeground";
-        };
-        vi_mode_cursor = {
-          text = "CellBackground";
-          cursor = "CellForeground";
-        };
-        search = {
-          matches = {
-            foreground = "0x44475a";
-            background = "0x50fa7b";
-          };
-          focused_match = {
-            foreground = "0x44475a";
-            background = "0xffb86c";
-          };
-        };
-        footer_bar = {
-          background = "0x282a36";
-          foreground = "0xf8f8f2";
-        };
-        line_indicator = {
-          foreground = "None";
-          background = "None";
+          text = "0xffffff";
+          cursor = "0x4a484d";
         };
         selection = {
-          text = "CellForeground";
-          background = "0x44475a";
+          text = "0xffffff";
+          background = "0x4a484d";
         };
         normal = {
-          black = "0x000000";
-          red = "0xff5555";
-          green = "0x50fa7b";
-          yellow = "0xf1fa8c";
-          blue = "0xbd93f9";
-          magenta = "0xff79c6";
-          cyan = "0x8be9fd";
-          white = "0xbfbfbf";
+          black = "0x4a484d";
+          red = "0xa50000";
+          green = "0x005d26";
+          yellow = "0x714700";
+          blue = "0x1d3ccf";
+          magenta = "0x88267a";
+          cyan = "0x185570";
+          white = "0xefefef";
         };
         bright = {
-          black = "0x4d4d4d";
-          red = "0xff6e67";
-          green = "0x5af78e";
-          yellow = "0xf4f99d";
-          blue = "0xcaa9fa";
-          magenta = "0xff92d0";
-          cyan = "0x9aedfe";
-          white = "0xe6e6e6";
-        };
-        dim = {
-          black = "0x14151b";
-          red = "0xff2222";
-          green = "0x1ef956";
-          yellow = "0xebf85b";
-          blue = "0x4d5b86";
-          magenta = "0xff46b0";
-          cyan = "0x59dffc";
-          white = "0xe6e6d1";
+          black = "0x5e4b4f";
+          red = "0x992030";
+          green = "0x4a5500";
+          yellow = "0x8a3600";
+          blue = "0x2d45b0";
+          magenta = "0x700dc9";
+          cyan = "0x005289";
+          white = "0xffffff";
         };
       };
+      # --- Dark Mode
+      # colors = {
+      #   primary = {
+      #     background = "0x1c1c1c";
+      #     foreground = "0xf8f8f2";
+      #   };
+      #   cursor = {
+      #     text = "CellBackground";
+      #     cursor = "CellForeground";
+      #   };
+      #   vi_mode_cursor = {
+      #     text = "CellBackground";
+      #     cursor = "CellForeground";
+      #   };
+      #   search = {
+      #     matches = {
+      #       foreground = "0x44475a";
+      #       background = "0x50fa7b";
+      #     };
+      #     focused_match = {
+      #       foreground = "0x44475a";
+      #       background = "0xffb86c";
+      #     };
+      #   };
+      #   footer_bar = {
+      #     background = "0x282a36";
+      #     foreground = "0xf8f8f2";
+      #   };
+      #   line_indicator = {
+      #     foreground = "None";
+      #     background = "None";
+      #   };
+      #   selection = {
+      #     text = "CellForeground";
+      #     background = "0x44475a";
+      #   };
+      #   normal = {
+      #     black = "0x000000";
+      #     red = "0xff5555";
+      #     green = "0x50fa7b";
+      #     yellow = "0xf1fa8c";
+      #     blue = "0xbd93f9";
+      #     magenta = "0xff79c6";
+      #     cyan = "0x8be9fd";
+      #     white = "0xbfbfbf";
+      #   };
+      #   bright = {
+      #     black = "0x4d4d4d";
+      #     red = "0xff6e67";
+      #     green = "0x5af78e";
+      #     yellow = "0xf4f99d";
+      #     blue = "0xcaa9fa";
+      #     magenta = "0xff92d0";
+      #     cyan = "0x9aedfe";
+      #     white = "0xe6e6e6";
+      #   };
+      #   dim = {
+      #     black = "0x14151b";
+      #     red = "0xff2222";
+      #     green = "0x1ef956";
+      #     yellow = "0xebf85b";
+      #     blue = "0x4d5b86";
+      #     magenta = "0xff46b0";
+      #     cyan = "0x59dffc";
+      #     white = "0xe6e6d1";
+      #   };
+      # };
       keyboard = {
         bindings = [
           {
@@ -231,56 +267,28 @@
     extraConfig = ''
       set-option -sa terminal-overrides ',xterm-256color:Tc'
 
-      ## Status bar
+      set-option -g status-position bottom
+      set -g status-justify left
+      set -g status-style "fg=#4c4c4b bg=#eeeeed bold"
 
-      # The following code is adapted from:
-      # https://coderwall.com/p/trgyrq/make-your-tmux-status-bar-responsive
-      # It provides the same appearance as https://github.com/powerline/powerline,
-      # but sidesteps the environment/configuration hell which that project
-      # introduces.
+      set-window-option -g mode-style "fg=#eeeeed bg=#0087af"
 
-      # Format to display on the left-hand side of the status bar.
-      # Note that the conditional #{?cond,true,false} operator does not do any
-      # fancy parsing, so you can't have literal commas in the conditions --
-      # this will cause the conditions to be split up. So we have to use multiple
-      # style #[attr=value] directives.
-      set-option -g status-left '\
-      #{?client_prefix,\
-      #[fg=colour254]#[bg=colour31],\
-      #[fg=colour16]#[bg=colour254]#[bold]}\
-       #{=80:session_name}\
-       #{?client_prefix,\
-      #[fg=colour31],\
-      #[fg=colour254]}\
-      #[bg=colour234,nobold] '
+      set -g status-left ""
+      set -g status-left-length 10
 
-      # Maximum length of the format displayed on the left-hand side.
-      # Since the maximum length of the session name is limited in the above
-      # format string, this number is unimportant -- it just needs to be a
-      # bit larger than what is allocated for the session name, to allow for
-      # the surrounding characters.
-      set-option -g status-left-length 90
+      set -g status-right "#[bg=#005f87 fg=#e4e4e4]  #S  "
+      set -g status-right-length 40
 
-      # Format to display on the right-hand side of the status bar.
-      set-option -g status-right \'\'
+      set -g window-status-current-style "fg=#e4e4e4 bg=#005f87"
+      set -g window-status-style "fg=#444444 bg=#d0d0d0"
+      set -g window-status-format "  #{window_name}  "
+      set -g window-status-current-format "  #{window_name}  "
+      set -g window-status-separator " "
 
-      # Format to display for the current window.
-      #set-option -g window-status-current-format "\
-      #[fg=colour117,bg=colour31] #{window_index}#{window_flags} \
-      #[fg=colour231,bold]#{window_name} #[fg=colour31,bg=colour234,nobold] "
-      set-option -g window-status-current-format "\
-      #[fg=colour147,bg=colour135] #{window_index}#{window_flags} \
-      #[fg=colour231,bold]#{window_name} #[fg=colour31,bg=colour234,nobold] "
+      set -g message-style "fg=#4c4c4b bg=#eeeeed"
 
-      # Format to display for other windows.
-      set-option -g window-status-format "\
-      #[fg=colour244,bg=colour234]#{window_index}#{window_flags} \
-      #[fg=colour249]#{window_name} "
-
-      # Background color for parts of the status bar not specified by the above
-      # formats. For instance, the empty space to the right, and the single
-      # spaces between instances of window-status-format.
-      set-option -g status-bg colour234
+      set -g pane-active-border-style "fg=#4c4c4b bg=#eeeeed"
+      set -g pane-border-style "fg=#4c4c4b bg=#eeeeed"
 
       # Inhibit the default styling for windows with unseen activity, which
       # looks blatantly incorrect with the "powerline" theme we are trying to
