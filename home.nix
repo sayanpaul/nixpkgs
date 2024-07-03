@@ -26,6 +26,7 @@
     nodejs
     parallel
     pandoc
+    procps
     pv # Pipe Viewer
     (python311.withPackages (p: with p; [pandas ipython black mypy pyright]))
     ripgrep
