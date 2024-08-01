@@ -18,6 +18,7 @@
     fzf
     gawk
     git
+    go
     gnused
     htop
     jdk
