@@ -259,6 +259,9 @@
       starship init fish | source
       eval "$(/opt/homebrew/bin/brew shellenv)"
       direnv hook fish | source
+      if type -q uv
+        uv generate-shell-completion fish | source
+      end
     '';
   };
 
