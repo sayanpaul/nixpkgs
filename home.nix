@@ -39,6 +39,7 @@
     tree-sitter
     watchman
     yq-go
+    zig
   ];
 
   programs.htop.enable = true;
