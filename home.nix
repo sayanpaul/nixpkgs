@@ -271,6 +271,7 @@
     terminal = "xterm-256color";
     extraConfig = ''
       set-option -sa terminal-overrides ',xterm-256color:Tc'
+      set-option -sg escape-time 10
 
       set-option -g status-position bottom
       set -g status-justify left
