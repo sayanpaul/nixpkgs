@@ -40,6 +40,7 @@
     watchman
     yq-go
     zig
+    zellij
   ];
 
   programs.htop.enable = true;
@@ -84,6 +85,7 @@
         dynamic_padding = true;
         decorations = "buttonless";
         startup_mode = "Windowed";
+        option_as_alt = "Both";
       };
       scrolling = {
         history = 1000;
@@ -228,7 +230,7 @@
         args = [
           "-l"
           "-c"
-          "tmux attach || tmux"
+          "zellij"
         ];
       };
     };
