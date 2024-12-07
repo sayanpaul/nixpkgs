@@ -11,28 +11,30 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    darwin,
-    home-manager,
-    ...
-  }: {
-    formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.alejandra;
+  outputs =
+    {
+      self,
+      nixpkgs,
+      darwin,
+      home-manager,
+      ...
+    }:
+    {
+      formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
 
-    darwinConfigurations = {
-      "Sayans-MacBook-Pro" = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./configuration.nix
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.sayanpaul = import ./home.nix;
-          }
-        ];
+      darwinConfigurations = {
+        "Sayans-MacBook-Pro" = darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [
+            ./configuration.nix
+            home-manager.darwinModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.sayanpaul = import ./home.nix;
+            }
+          ];
+        };
       };
     };
-  };
 }

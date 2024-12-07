@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
 
@@ -15,7 +16,7 @@
   fonts.fontDir.enable = true;
   fonts.fonts = with pkgs; [
     recursive
-    (nerdfonts.override {fonts = ["JetBrainsMono"];})
+    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
   environment = {
