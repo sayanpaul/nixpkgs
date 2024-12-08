@@ -9,4 +9,19 @@ keybinds {
 		}
 	}
 }
-theme "Catppuccin Latte"
+theme "catppuccin-latte"
+themes {
+	catppuccin-latte {
+		bg "#acb0be"
+		fg "#4c4f69"
+		red "#d20f39"
+		green "#40a02b"
+		blue "#1e66f5"
+		yellow "#df8e1d"
+		magenta "#ea76cb"
+		orange "#fe640b"
+		cyan "#04a5e5"
+		black "#e6e9ef"
+		white "#4c4f69"
+	}
+}
