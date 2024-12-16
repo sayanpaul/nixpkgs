@@ -35,8 +35,9 @@
       # The below are dependent on `nvim` and `bat` being installed by
       # home-manager
       BAT_STYLE = "plain";
+      BAT_THEME = "Dracula";
       EDITOR = "nvim";
-      MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+      LS_COLORS = "";
     };
   };
 
@@ -59,8 +60,11 @@
     enable = true;
     enableSyntaxHighlighting = true;
     enableFzfHistory = true;
+    promptInit = ''
+      autoload -U promptinit && promptinit && prompt redhat && setopt prompt_sp
+    '';
     interactiveShellInit = ''
-      alias ls=exa
+      alias ls=eza
       alias vim=nvim
     '';
   };
