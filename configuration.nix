@@ -13,8 +13,7 @@
 
   users.users.sayanpaul.home = /Users/sayanpaul;
 
-  fonts.fontDir.enable = true;
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     recursive
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
