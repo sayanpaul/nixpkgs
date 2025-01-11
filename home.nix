@@ -8,52 +8,55 @@
 {
   home.stateVersion = "24.11";
 
-  home.packages = with pkgs; [
-    bat
-    coreutils
-    curl
-    delta # Alternative git diff pager
-    direnv
-    du-dust
-    envchain
-    eza # Alternative `ls`
-    fd # Alternative `find`
-    ffmpeg_7-headless
-    fzf
-    gawk
-    git
-    go
-    gnused
-    htop
-    jdk
-    jq
-    neovim
-    nodejs
-    parallel
-    pandoc
-    procps
-    pv # Pipe Viewer
-    (python311.withPackages (
-      p: with p; [
-        pandas
-        ipython
-        black
-        mypy
-        pyright
-      ]
-    ))
-    ripgrep
-    shellcheck
-    shfmt
-    starship
-    texlive.combined.scheme-full
-    tmux
-    tree-sitter
-    watchman
-    yq-go
-    zig
-    zellij
-  ];
+  home.packages =
+    with pkgs;
+    [
+      bat
+      coreutils
+      curl
+      delta # Alternative git diff pager
+      direnv
+      du-dust
+      envchain
+      eza # Alternative `ls`
+      fd # Alternative `find`
+      ffmpeg_7-headless
+      fzf
+      gawk
+      git
+      go
+      gnused
+      htop
+      jdk
+      jq
+      nodejs
+      parallel
+      pandoc
+      procps
+      pv # Pipe Viewer
+      (python312.withPackages (
+        p: with p; [
+          pandas
+          pip
+          ipython
+          basedpyright
+          black
+          mypy
+        ]
+      ))
+      ripgrep
+      shellcheck
+      shfmt
+      starship
+      texlive.combined.scheme-full
+      tmux
+      tree-sitter
+      watchman
+      yq-go
+      zig
+      zellij
+    ]
+    ++ (with nixpkgs-unstable; [ neovim ]);
 
   programs.htop.enable = true;
   programs.htop.settings.show_program_path = true;
@@ -70,112 +73,6 @@
     '';
   };
 
-  # attributes taken from
-  # https://github.com/gitattributes/gitattributes/blob/master/Common.gitattributes
-  xdg.configFile."git/globalattributes" = {
-    enable = true;
-    text = ''
-      # Common settings that generally should always be used with your language specific settings
-
-      # Auto detect text files and perform LF normalization
-      *          text=auto
-
-      #
-      # The above will handle all files NOT found below
-      #
-
-      # Documents
-      *.bibtex   text diff=bibtex
-      *.doc      diff=astextplain
-      *.DOC      diff=astextplain
-      *.docx     diff=astextplain
-      *.DOCX     diff=astextplain
-      *.dot      diff=astextplain
-      *.DOT      diff=astextplain
-      *.pdf      diff=astextplain
-      *.PDF      diff=astextplain
-      *.rtf      diff=astextplain
-      *.RTF      diff=astextplain
-      *.md       text diff=markdown
-      *.mdx      text diff=markdown
-      *.tex      text diff=tex
-      *.adoc     text
-      *.textile  text
-      *.mustache text
-      *.csv      text eol=crlf
-      *.tab      text
-      *.tsv      text
-      *.txt      text
-      *.sql      text
-      *.epub     diff=astextplain
-
-      # Graphics
-      *.png      binary
-      *.jpg      binary
-      *.jpeg     binary
-      *.gif      binary
-      *.tif      binary
-      *.tiff     binary
-      *.ico      binary
-      # SVG treated as text by default.
-      *.svg      text
-      # If you want to treat it as binary,
-      # use the following line instead.
-      # *.svg    binary
-      *.eps      binary
-
-      # Scripts
-      *.bash     text eol=lf
-      *.fish     text eol=lf
-      *.ksh      text eol=lf
-      *.sh       text eol=lf
-      *.zsh      text eol=lf
-      # These are explicitly windows files and should use crlf
-      *.bat      text eol=crlf
-      *.cmd      text eol=crlf
-      *.ps1      text eol=crlf
-
-      # Serialisation
-      *.json     text
-      *.toml     text
-      *.xml      text
-      *.yaml     text
-      *.yml      text
-
-      # Archives
-      *.7z       binary
-      *.bz       binary
-      *.bz2      binary
-      *.bzip2    binary
-      *.gz       binary
-      *.lz       binary
-      *.lzma     binary
-      *.rar      binary
-      *.tar      binary
-      *.taz      binary
-      *.tbz      binary
-      *.tbz2     binary
-      *.tgz      binary
-      *.tlz      binary
-      *.txz      binary
-      *.xz       binary
-      *.Z        binary
-      *.zip      binary
-      *.zst      binary
-
-      # Text files where line endings should be preserved
-      *.patch    -text
-
-      #
-      # Exclude files from exporting
-      #
-
-      .gitattributes export-ignore
-      .gitignore     export-ignore
-      .gitkeep       export-ignore
-    '';
-  };
-
   programs.git = {
     enable = true;
     userName = "Sayan Paul";
@@ -185,14 +82,11 @@
       signByDefault = true;
     };
 
-    delta.enable = true;
-
     extraConfig = {
       branch.autosetuprebase = "always";
       color.ui = "auto";
       core = {
         excludesfile = "${config.xdg.configHome}/git/globalignore";
-        attributesfile = "${config.xdg.configHome}/git/globalattributes";
         commentChar = ";";
         untrackedcache = "true";
         fsmonitor = "true";
@@ -203,12 +97,8 @@
         stat = "true";
       };
       rebase.updateRefs = "true";
+      rerere.enabled = "true";
       diff.colorMoved = "dimmed-zebra";
-      delta = {
-        syntax-theme = "GitHub";
-        navigate = "true";
-        line-numbers = "true";
-      };
       maintenance = {
         auto = false;
         strategy = "incremental";
@@ -375,7 +265,7 @@
         args = [
           "-l"
           "-c"
-          "zellij"
+          "zellij attach --create"
         ];
       };
     };
@@ -408,9 +298,6 @@
       set -g fish_key_bindings fish_vi_key_bindings
       starship init fish | source
       direnv hook fish | source
-      if type -q uv
-        uv generate-shell-completion fish | source
-      end
 
       # Preserve some readline shortcuts in vi mode
       bind -M insert \cF 'forward-char'
@@ -471,12 +358,66 @@
     '';
   };
 
-  programs.zellij = {
-    enable = true;
-  };
+  programs.zellij.enable = true;
 
   # The translation logic in home-manager is not very intuitive
   home.file.".config/zellij/config.kdl".source = ./zellij/config.kdl;
+
+  home.file.".config/ghostty/config".text = ''
+    theme = dark:tempus-night,light:tempus-totus
+    unfocused-split-opacity = 0.99
+    font-thicken = true
+    window-inherit-working-directory = true
+    shell-integration = fish
+  '';
+
+  home.file.".config/ghostty/themes/tempus-night".text = ''
+    palette = 0=#1a1a1a
+    palette = 1=#ff929f
+    palette = 2=#5fc940
+    palette = 3=#c5b300
+    palette = 4=#5fb8ff
+    palette = 5=#ef91df
+    palette = 6=#1dc5c3
+    palette = 7=#c4bdaf
+    palette = 8=#242536
+    palette = 9=#f69d6a
+    palette = 10=#88c400
+    palette = 11=#d7ae00
+    palette = 12=#8cb4f0
+    palette = 13=#de99f0
+    palette = 14=#00ca9a
+    palette = 15=#e0e0e0
+    background = 1a1a1a
+    foreground = e0e0e0
+    cursor-color = e0e0e0
+    selection-background = e0e0e0
+    selection-foreground = 1a1a1a
+  '';
+
+  home.file.".config/ghostty/themes/tempus-totus".text = ''
+    palette = 0=#4a484d
+    palette = 1=#a50000
+    palette = 2=#005d26
+    palette = 3=#714700
+    palette = 4=#1d3ccf
+    palette = 5=#88267a
+    palette = 6=#185570
+    palette = 7=#efefef
+    palette = 8=#5e4b4f
+    palette = 9=#992030
+    palette = 10=#4a5500
+    palette = 11=#8a3600
+    palette = 12=#2d45b0
+    palette = 13=#700dc9
+    palette = 14=#005289
+    palette = 15=#ffffff
+    background = ffffff
+    foreground = 4a484d
+    cursor-color = 4a484d
+    selection-foreground = ffffff
+    selection-background = 4a484d
+  '';
 
   editorconfig = {
     enable = true;
