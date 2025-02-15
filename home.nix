@@ -366,6 +366,7 @@
   home.file.".config/ghostty/config".text = ''
     theme = dark:tempus-night,light:tempus-totus
     unfocused-split-opacity = 0.99
+    font-size = 14
     font-thicken = true
     window-inherit-working-directory = true
     shell-integration = fish
@@ -418,6 +419,11 @@
     selection-foreground = ffffff
     selection-background = 4a484d
   '';
+
+  home.file.".config/nvim" = {
+    source = ./nvim;
+    recursive = true;
+  };
 
   editorconfig = {
     enable = true;

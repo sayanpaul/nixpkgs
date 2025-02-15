@@ -100,5 +100,10 @@
     };
   };
 
+  system.keyboard = {
+    enableKeyMapping = true;
+    remapCapsLockToEscape = true;
+  };
+
   system.stateVersion = 4;
 }
