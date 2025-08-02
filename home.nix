@@ -17,6 +17,7 @@
       delta # Alternative git diff pager
       direnv
       du-dust
+      duckdb
       envchain
       eza # Alternative `ls`
       fd # Alternative `find`
@@ -55,6 +56,7 @@
       yq-go
       zig
       zellij
+      zoxide
     ]
     ++ (with nixpkgs-unstable; [ neovim ]);
 
@@ -298,6 +300,7 @@
       set -g fish_key_bindings fish_vi_key_bindings
       starship init fish | source
       direnv hook fish | source
+      zoxide init fish | source
 
       # Preserve some readline shortcuts in vi mode
       bind -M insert \cF 'forward-char'
