@@ -14,7 +14,7 @@
       bat
       coreutils
       curl
-      delta # Alternative git diff pager
+      difftastic
       direnv
       dust
       duckdb
@@ -27,7 +27,6 @@
       git
       go
       gnused
-      htop
       jdk
       jq
       nodejs
@@ -59,8 +58,7 @@
     ]
     ++ (with nixpkgs-unstable; [ neovim ]);
 
-  programs.htop.enable = true;
-  programs.htop.settings.show_program_path = true;
+  xdg.enable = true;
 
   xdg.configFile."git/globalignore" = {
     enable = true;
@@ -86,6 +84,7 @@
         name = "Sayan Paul";
         email = "sayan.paul.us@gmail.com";
       };
+      init.defaultBranch = "main";
       branch.autosetuprebase = "always";
       color.ui = "auto";
       core = {
@@ -109,6 +108,11 @@
         repo = [ "${config.xdg.configHome}/nixpkgs" ];
       };
       fetch.writeCommitGraph = true;
+      alias = {
+        dl = "-c diff.external=difft log -p --ext-diff";
+        ds = "-c diff.external=difft show --ext-diff";
+        dft = "-c diff.external=difft diff";
+      };
     };
   };
 
@@ -118,6 +122,9 @@
       vim = "nvim";
       ls = "eza";
     };
+    plugins = [
+      { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
+    ];
     shellAbbrs = {
       ga = "git add";
       gc = "git commit -v";
@@ -145,58 +152,6 @@
       bind -M insert \cF 'forward-char'
       bind -M insert \cA 'beginning-of-line'
       bind -M insert \cE 'end-of-line'
-    '';
-  };
-
-  programs.tmux = {
-    enable = true;
-    mouse = true;
-    terminal = "xterm-256color";
-    extraConfig = ''
-      set-option -sa terminal-overrides ',xterm-256color:Tc'
-      set-option -sg escape-time 10
-
-      set-option -g status-position bottom
-      set -g status-justify left
-      set -g status-style "fg=#4c4c4b bg=#eeeeed bold"
-
-      set-window-option -g mode-style "fg=#eeeeed bg=#0087af"
-
-      set -g status-left ""
-      set -g status-left-length 10
-
-      set -g status-right "#[bg=#005f87 fg=#e4e4e4]  #S  "
-      set -g status-right-length 40
-
-      set -g window-status-current-style "fg=#e4e4e4 bg=#005f87"
-      set -g window-status-style "fg=#444444 bg=#d0d0d0"
-      set -g window-status-format "  #{window_name}  "
-      set -g window-status-current-format "  #{window_name}  "
-      set -g window-status-separator " "
-
-      set -g message-style "fg=#4c4c4b bg=#eeeeed"
-
-      set -g pane-active-border-style "fg=#4c4c4b bg=#eeeeed"
-      set -g pane-border-style "fg=#4c4c4b bg=#eeeeed"
-
-      # Inhibit the default styling for windows with unseen activity, which
-      # looks blatantly incorrect with the "powerline" theme we are trying to
-      # emulate.
-      set-window-option -g window-status-activity-style none
-      set-window-option -g window-status-activity-style none
-
-      # Update the status bar every second, instead of the default 15(!)
-      # seconds. It doesn't look like it's possible to update more than
-      # once per second, unfortunately.
-      set-option -g status-interval 1
-
-      bind -n C-S-Left previous-window
-      bind -n C-S-Right next-window
-
-      # Open new windows and splits in the same directory as the current pane.
-      bind '"' split-window -c "#{pane_current_path}"
-      bind % split-window -h -c "#{pane_current_path}"
-      bind-key c new-window -c "#{pane_current_path}"
     '';
   };
 
