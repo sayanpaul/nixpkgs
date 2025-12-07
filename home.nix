@@ -55,7 +55,6 @@
       watchman
       yq-go
       zig
-      zellij
       zoxide
     ]
     ++ (with nixpkgs-unstable; [ neovim ]);
@@ -201,67 +200,10 @@
     '';
   };
 
-  programs.zellij.enable = true;
-
-  # The translation logic in home-manager is not very intuitive
-  home.file.".config/zellij/config.kdl".source = ./zellij/config.kdl;
-
-  home.file.".config/ghostty/config".text = ''
-    theme = dark:tempus-night,light:tempus-totus
-    unfocused-split-opacity = 0.99
-    font-size = 14
-    font-thicken = true
-    window-inherit-working-directory = true
-    shell-integration = fish
-  '';
-
-  home.file.".config/ghostty/themes/tempus-night".text = ''
-    palette = 0=#1a1a1a
-    palette = 1=#ff929f
-    palette = 2=#5fc940
-    palette = 3=#c5b300
-    palette = 4=#5fb8ff
-    palette = 5=#ef91df
-    palette = 6=#1dc5c3
-    palette = 7=#c4bdaf
-    palette = 8=#242536
-    palette = 9=#f69d6a
-    palette = 10=#88c400
-    palette = 11=#d7ae00
-    palette = 12=#8cb4f0
-    palette = 13=#de99f0
-    palette = 14=#00ca9a
-    palette = 15=#e0e0e0
-    background = 1a1a1a
-    foreground = e0e0e0
-    cursor-color = e0e0e0
-    selection-background = e0e0e0
-    selection-foreground = 1a1a1a
-  '';
-
-  home.file.".config/ghostty/themes/tempus-totus".text = ''
-    palette = 0=#4a484d
-    palette = 1=#a50000
-    palette = 2=#005d26
-    palette = 3=#714700
-    palette = 4=#1d3ccf
-    palette = 5=#88267a
-    palette = 6=#185570
-    palette = 7=#efefef
-    palette = 8=#5e4b4f
-    palette = 9=#992030
-    palette = 10=#4a5500
-    palette = 11=#8a3600
-    palette = 12=#2d45b0
-    palette = 13=#700dc9
-    palette = 14=#005289
-    palette = 15=#ffffff
-    background = ffffff
-    foreground = 4a484d
-    cursor-color = 4a484d
-    selection-foreground = ffffff
-    selection-background = 4a484d
-  '';
+  home.file.".config/ghostty" = {
+    source = ./ghostty;
+    recursive = true;
+  };
 
   home.file.".config/nvim" = {
     source = ./nvim;

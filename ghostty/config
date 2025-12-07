@@ -1,0 +1,6 @@
+theme = dark:tempus-night,light:tempus-totus
+unfocused-split-opacity = 0.99
+font-size = 14
+font-thicken = true
+window-inherit-working-directory = true
+shell-integration = fish
