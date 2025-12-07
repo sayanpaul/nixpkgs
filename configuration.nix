@@ -5,8 +5,8 @@
   ...
 }:
 {
-  services.nix-daemon.enable = true;
   nix.package = pkgs.nix;
+  nix.enable = false;
 
   # Hack to build on 24.05, some options-db dependency had an invalid XML
   documentation.enable = false;
@@ -15,7 +15,7 @@
 
   fonts.packages = with pkgs; [
     recursive
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+    pkgs.nerd-fonts.jetbrains-mono
   ];
 
   environment = {
@@ -68,7 +68,10 @@
     '';
   };
 
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
+
+  # Required for multi-user setup
+  system.primaryUser = "sayanpaul";
 
   system.defaults = {
     CustomUserPreferences = {

@@ -2,13 +2,13 @@
   description = "Sayan's personal system configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-24.11-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    darwin.url = "github:LnL7/nix-darwin";
+    darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -25,7 +25,7 @@
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
 
       darwinConfigurations = {
-        "Sayans-MacBook-Pro" = darwin.lib.darwinSystem {
+        "Sayans-MacBook-Pro-4" = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [
             ./configuration.nix
