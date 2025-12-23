@@ -1,68 +1,68 @@
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out, "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
 vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = "\\"
 vim.g.maplocalleader = " "
 
-vim.o.autoread = true;
-vim.o.completeopt = 'menuone'
-vim.o.mouse = 'a';
-vim.o.ttyfast = true;
+vim.o.autoread = true
+vim.o.completeopt = "menuone"
+vim.o.mouse = "a"
+vim.o.ttyfast = true
 
 -- BLACK
-vim.g.black_linelength = 100;
+vim.g.black_linelength = 100
 
 -- BACKUPS
-vim.o.backup = false;
+vim.o.backup = false
 
 -- SEARCH
-vim.o.incsearch = true; -- As chars entered.
-vim.o.ignorecase = true;
-vim.o.smartcase = true;
-vim.o.hlsearch = true;
+vim.o.incsearch = true -- As chars entered.
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.o.hlsearch = true
 
 -- COLORS
-vim.o.termguicolors = true;
+vim.o.termguicolors = true
 
 -- LINES
-vim.o.softtabstop = 4;
-vim.o.shiftwidth = 4;
-vim.o.tabstop = 4;
-vim.o.expandtab = true;
-vim.o.smartindent = true;
+vim.bo.softtabstop = 4
+vim.bo.shiftwidth = 4
+vim.bo.tabstop = 4
+vim.bo.expandtab = true
+vim.bo.smartindent = true
 
-vim.wo.cursorline = true;
-vim.o.backspace = 'indent,eol,start';
-vim.o.textwidth = 0;
-vim.o.hidden = true;
-vim.o.lazyredraw = true; -- Redraw only as needed.
-vim.o.showmatch = true; -- Highlight matching parens.
+vim.wo.cursorline = true
+vim.o.backspace = "indent,eol,start"
+vim.o.textwidth = 0
+vim.o.hidden = true
+vim.o.lazyredraw = true -- Redraw only as needed.
+vim.o.showmatch = true -- Highlight matching parens.
 
 -- SIDEBAR
-vim.wo.number = true;
-vim.wo.relativenumber = true;
-vim.o.showcmd = true; -- Show command in bottom bar.
+vim.wo.number = true
+vim.wo.relativenumber = true
+vim.o.showcmd = true -- Show command in bottom bar.
 
 -- IGNORANCE
-vim.o.wildignore = vim.o.wildignore .. '*/tmp/*,*.so,*.swp,*.zip,*~';
+vim.o.wildignore = vim.o.wildignore .. "*/tmp/*,*.so,*.swp,*.zip,*~"
 
 -- Remap ctrl+a and ctrl+e to home and end respectively
-vim.api.nvim_set_keymap('n', '<C-a>', '<Home>', {noremap = true})
-vim.api.nvim_set_keymap('n', '<C-e>', '<End>', {noremap = true})
+vim.api.nvim_set_keymap("n", "<C-a>", "<Home>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<C-e>", "<End>", { noremap = true })
 
 local silent = { silent = true }
 local noremap = { noremap = true }
@@ -78,36 +78,13 @@ vim.api.nvim_set_keymap("v", "<leader>y", '"+y', noremap) -- Copy.
 vim.api.nvim_set_keymap("n", "<leader>p", '"+gp', noremap) -- Paste.
 
 require("lazy").setup({
-    spec = {
+	spec = {
 		{
 			"nvim-treesitter/nvim-treesitter",
-			cond = function()
-				return not vim.g.vscode
-			end,
-			event = { "BufReadPost", "BufNewFile" },
+			branch = "main",
+			version = false,
+			lazy = false,
 			build = ":TSUpdate",
-			dependencies = {
-				"nvim-treesitter/nvim-treesitter-textobjects",
-			},
-			opts = {
-				ensure_installed = {
-					"lua",
-					"terraform",
-					"vim",
-					"vimdoc",
-					"query",
-					"markdown",
-					"markdown_inline",
-				},
-				sync_install = true,
-				highlight = {
-					enable = true,
-					additional_vim_regex_highlighting = false,
-				},
-			},
-			config = function(_, opts)
-				require("nvim-treesitter.configs").setup(opts)
-			end,
 		},
 
 		{
@@ -373,33 +350,33 @@ require("lazy").setup({
 		{ "tpope/vim-sleuth", event = { "BufReadPost", "BufNewFile" } },
 	},
 
-    install = {},
-    checker = { enabled = false },
+	install = {},
+	checker = { enabled = false },
 
-    performance = {
-        rtp = {
-            disabled_plugins = {
-                "gzip",
-                "matchit",
-                "matchparen",
-                "netrwPlugin",
-                "tarPlugin",
-                "tohtml",
-                "tutor",
-                "zipPlugin",
-            },
-        },
-    },
+	performance = {
+		rtp = {
+			disabled_plugins = {
+				"gzip",
+				"matchit",
+				"matchparen",
+				"netrwPlugin",
+				"tarPlugin",
+				"tohtml",
+				"tutor",
+				"zipPlugin",
+			},
+		},
+	},
 })
 
 if not vim.g.vscode then
-    local handle = io.popen('defaults read -g AppleInterfaceStyle 2>/dev/null')
-    local result = handle:read('*a')
-    handle:close()
-    local config_dir = vim.fn.stdpath('config')
-    if result:find("Dark") then
-        vim.cmd('source ' .. config_dir .. '/tempus_night.vim')
-    else
-        vim.cmd('source ' .. config_dir .. '/tempus_totus.vim')
-    end
+	local handle = io.popen("defaults read -g AppleInterfaceStyle 2>/dev/null")
+	local result = handle:read("*a")
+	handle:close()
+	local config_dir = vim.fn.stdpath("config")
+	if result:find("Dark") then
+		vim.cmd("source " .. config_dir .. "/tempus_night.vim")
+	else
+		vim.cmd("source " .. config_dir .. "/tempus_totus.vim")
+	end
 end

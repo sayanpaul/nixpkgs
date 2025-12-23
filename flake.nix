@@ -25,7 +25,7 @@
       formatter.aarch64-darwin = nixpkgs.legacyPackages.aarch64-darwin.nixfmt-rfc-style;
 
       darwinConfigurations = {
-        "Sayans-MacBook-Pro-4" = darwin.lib.darwinSystem {
+        "Sayans-MacBook-Air" = darwin.lib.darwinSystem {
           system = "aarch64-darwin";
           modules = [
             ./configuration.nix

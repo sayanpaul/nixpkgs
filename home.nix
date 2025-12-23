@@ -75,7 +75,8 @@
   programs.git = {
     enable = true;
     signing = {
-      key = "2DA1893F2D59E6A9";
+      format = "ssh";
+      key = "~/.ssh/id_ed25519.pub";
       signByDefault = true;
     };
 
