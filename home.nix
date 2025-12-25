@@ -12,6 +12,7 @@
     with pkgs;
     [
       bat
+      cloc
       coreutils
       curl
       difftastic
@@ -29,25 +30,17 @@
       gnused
       jdk
       jq
+      nixfmt-rfc-style
       nodejs
       parallel
       pandoc
       procps
       pv # Pipe Viewer
-      (python312.withPackages (
-        p: with p; [
-          pandas
-          pip
-          ipython
-          basedpyright
-          black
-          mypy
-        ]
-      ))
       ripgrep
       shellcheck
       shfmt
       starship
+      stylua
       texlive.combined.scheme-full
       tmux
       tree-sitter
@@ -56,7 +49,12 @@
       zig
       zoxide
     ]
-    ++ (with nixpkgs-unstable; [ neovim ]);
+    ++ (with nixpkgs-unstable; [
+      deno
+      jujutsu
+      neovim
+      uv
+    ]);
 
   xdg.enable = true;
 
@@ -124,7 +122,10 @@
       ls = "eza";
     };
     plugins = [
-      { name = "fzf-fish"; src = pkgs.fishPlugins.fzf-fish.src; }
+      {
+        name = "fzf-fish";
+        src = pkgs.fishPlugins.fzf-fish.src;
+      }
     ];
     shellAbbrs = {
       ga = "git add";
@@ -132,7 +133,9 @@
       gcam = "git commit -a -v -m";
       "gc!" = "git commit -v --amend --date=now";
       "gcn!" = "git commit -v --no-edit --amend --date=now";
-      gd = "git diff";
+      gd = "git dft";
+      gds = "git ds";
+      gdl = "git dl";
       glo = "git log --oneline --decorate --color";
       glog = "git log --oneline --decorate --color --graph";
       gloo = "git log --pretty=format:'%C(yellow)%h %C(cyan)%ad %Cblue%an%Cgreen%d %Creset%s' --date=short";
@@ -153,7 +156,39 @@
       bind -M insert \cF 'forward-char'
       bind -M insert \cA 'beginning-of-line'
       bind -M insert \cE 'end-of-line'
+
+      # Inline the output of /opt/homebrew/bin/brew shellenv
+      set --global --export HOMEBREW_PREFIX "/opt/homebrew";
+      set --global --export HOMEBREW_CELLAR "/opt/homebrew/Cellar";
+      set --global --export HOMEBREW_REPOSITORY "/opt/homebrew";
+      fish_add_path --global --move --path "/opt/homebrew/bin" "/opt/homebrew/sbin";
+      if test -n "$MANPATH[1]"; set --global --export MANPATH \'\' $MANPATH; end;
+      if not contains "/opt/homebrew/share/info" $INFOPATH; set --global --export INFOPATH "/opt/homebrew/share/info" $INFOPATH; end;
+
+      fish_add_path --path ~/.local/bin
     '';
+  };
+
+  programs.jujutsu = {
+    enable = true;
+    settings = {
+      user = {
+        name = "Sayan Paul";
+        email = "sayan.paul.us@gmail.com";
+      };
+      ui.diff-formatter = [
+        "${pkgs.difftastic}/bin/difft"
+        "--color=always"
+        "$left"
+        "$right"
+      ];
+      signing = {
+        behavior = "own";
+        sign-all = true;
+        backend = "ssh";
+        key = "~/.ssh/id_ed25519.pub";
+      };
+    };
   };
 
   home.file.".config/ghostty" = {

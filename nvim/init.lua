@@ -92,7 +92,7 @@ require("lazy").setup({
 			cond = function()
 				return not vim.g.vscode
 			end,
-			version = "0.1.5",
+			version = "0.2.0",
 			cmd = "Telescope",
 			dependencies = {
 				"nvim-lua/plenary.nvim",
@@ -164,7 +164,7 @@ require("lazy").setup({
 				require("mason-lspconfig").setup({
 					ensure_installed = {
 						"gopls",
-						"pyrefly",
+						"ty",
 					},
 					automatic_enable = not vim.g.vscode,
 				})
