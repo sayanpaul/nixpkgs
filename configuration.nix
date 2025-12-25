@@ -74,14 +74,12 @@
   system.primaryUser = "sayanpaul";
 
   system.defaults = {
-    CustomUserPreferences = {
-      "com.google.Chrome"."ApplePressAndHoldEnabled" = false;
-      "com.microsoft.VSCode"."ApplePressAndHoldEnabled" = false;
-    };
-
     NSGlobalDomain = {
+      ApplePressAndHoldEnabled = false;
       InitialKeyRepeat = 15;
       KeyRepeat = 2;
+      # Disable "natural" scrolling
+      "com.apple.swipescrolldirection" = false;
     };
 
     dock = {
